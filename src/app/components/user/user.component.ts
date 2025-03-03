@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { User } from '../../models/user';
 
 @Component({
@@ -9,5 +9,5 @@ import { User } from '../../models/user';
 })
 export class UserComponent {
 
-  users: User[] = [];
+  @Input() users: User[] = [];
 }
