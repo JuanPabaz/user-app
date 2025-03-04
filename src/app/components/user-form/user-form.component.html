@@ -107,7 +107,13 @@
         class="btn btn-primary my-2" 
         type="submit"
         [disabled]="userForm.invalid">
-            Crear
+            {{(user.id > 0) ? 'Editar': 'Crear'}}
+        </button>
+        <button 
+        type="button" 
+        class="btn btn-secondary mx-2"
+        (click)="onClear(userForm)">
+            Limpiar
         </button>
     </div>
 </form>
