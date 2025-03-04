@@ -1,11 +1,16 @@
 <div class="container my-4">
     <h1>Listado de usuarios</h1>
+    <button 
+    class="btn btn-primary"
+    (click)="setShowForm()">{{showForm ? 'Cerrar' : 'Crear usuario'}}</button>
     <div class="row">
-        <div class="col">
-            <app-user-form
-            [user]="selectedUser"
-            (newUserEventEmitter)="addUser($event)"/>
-        </div>
+        @if (showForm) {
+            <div class="col">
+                <app-user-form
+                [user]="selectedUser"
+                (newUserEventEmitter)="addUser($event)"/>
+            </div>
+        }
         <div class="col">
             <app-user 
             [users]="users"

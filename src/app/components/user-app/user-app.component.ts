@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 export class UserAppComponent implements OnInit{
   users: User[] = [];
   selectedUser: User = new User();
+  showForm: boolean = false;
 
   constructor(private user_service: UserService){
 
@@ -39,7 +40,7 @@ export class UserAppComponent implements OnInit{
     }
     this.selectedUser = new User();
     Swal.fire({
-      title: "Drag me!",
+      title: "Guardado!",
       icon: "success",
       draggable: true
     });
@@ -71,5 +72,11 @@ export class UserAppComponent implements OnInit{
 
   setUser(user: User){
     this.selectedUser = {...user};
+    this.showForm = true;
+  }
+
+  setShowForm(){
+    this.showForm = !this.showForm;
+    this.selectedUser = new User();
   }
 }
