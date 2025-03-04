@@ -12,6 +12,7 @@ import { UserFormComponent } from '../user-form/user-form.component';
 })
 export class UserAppComponent implements OnInit{
   users: User[] = [];
+  selectedUser: User = new User();
 
   constructor(private user_service: UserService){
 
@@ -24,6 +25,27 @@ export class UserAppComponent implements OnInit{
   }
 
   addUser(user: User){
-    this.users = [...this.users,{...user, id: new Date().getTime()}];
+    if (user.id > 0){
+      this.users = this.users.map(u =>{
+        if (u.id === user.id){
+          return {...user};
+        }
+        return u;
+      }
+      )
+    }else{
+      this.users = [...this.users,{...user, id: new Date().getTime()}];
+    }
+    this.selectedUser = new User();
+  }
+
+  removeUser(id: number){
+    this.users = this.users.filter(user => 
+      user.id !== id
+    )
+  }
+
+  setUser(user: User){
+    this.selectedUser = {...user};
   }
 }

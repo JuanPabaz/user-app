@@ -3,11 +3,14 @@
     <div class="row">
         <div class="col">
             <app-user-form
+            [user]="selectedUser"
             (newUserEventEmitter)="addUser($event)"/>
         </div>
         <div class="col">
             <app-user 
-            [users]="users"/>
+            [users]="users"
+            (idUserEventEmitter)="removeUser($event)"
+            (selectedUserEventEmitter)="setUser($event)"/>
         </div>
     </div>
 </div>
