@@ -3,6 +3,7 @@ import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import { UserComponent } from '../user/user.component';
 import { UserFormComponent } from '../user-form/user-form.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user-app',
@@ -37,12 +38,35 @@ export class UserAppComponent implements OnInit{
       this.users = [...this.users,{...user, id: new Date().getTime()}];
     }
     this.selectedUser = new User();
+    Swal.fire({
+      title: "Drag me!",
+      icon: "success",
+      draggable: true
+    });
   }
 
   removeUser(id: number){
-    this.users = this.users.filter(user => 
-      user.id !== id
-    )
+    Swal.fire({
+      title: "¿Estas seguro de eliminar el usuario?",
+      text: "Esta acción no se podrá revertir",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Cancelar",
+      confirmButtonText: "Si, eliminar!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.users = this.users.filter(user => 
+          user.id !== id
+        )
+        Swal.fire({
+          title: "Eliminado!",
+          text: "El usuario ha sido eliminado.",
+          icon: "success"
+        });
+      }
+    });
   }
 
   setUser(user: User){
