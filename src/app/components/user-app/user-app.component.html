@@ -5,9 +5,10 @@
     (click)="setShowForm()">{{showForm ? 'Cerrar' : 'Crear usuario'}}</button>
     <div class="row">
         @if (showForm) {
-            <div class="col">
+            <div class="abrir-modal animacion fadeIn">
                 <app-user-form
                 [user]="selectedUser"
+                (showFormEventEmitter)="setShowForm()"
                 (newUserEventEmitter)="addUser($event)"/>
             </div>
         }
