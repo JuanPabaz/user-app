@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { User } from '../../models/user';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-user',
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
