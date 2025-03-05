@@ -1,20 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
-import { UserComponent } from '../user/user.component';
-import { UserFormComponent } from '../user-form/user-form.component';
 import Swal from 'sweetalert2';
+import { RouterOutlet } from '@angular/router';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   selector: 'app-user-app',
-  imports: [UserComponent, UserFormComponent],
+  imports: [RouterOutlet, NavbarComponent],
   templateUrl: './user-app.component.html',
   styleUrl: './user-app.component.css'
 })
 export class UserAppComponent implements OnInit{
   users: User[] = [];
   selectedUser: User = new User();
-  showForm: boolean = false;
 
   constructor(private user_service: UserService){
 
@@ -72,11 +71,5 @@ export class UserAppComponent implements OnInit{
 
   setUser(user: User){
     this.selectedUser = {...user};
-    this.showForm = true;
-  }
-
-  setShowForm(){
-    this.showForm = !this.showForm;
-    this.selectedUser = new User();
   }
 }
