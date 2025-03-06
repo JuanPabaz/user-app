@@ -9,9 +9,9 @@ import { User } from '../../models/user';
   styleUrl: './user-form.component.css'
 })
 export class UserFormComponent {
-  @Input() user: User = new User();
+  user: User = new User();
 
-  @Output() newUserEventEmitter: EventEmitter<User> = new EventEmitter();
+  newUserEventEmitter: EventEmitter<User> = new EventEmitter();
 
   constructor(){
     this.user = new User();
