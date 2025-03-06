@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms' 
 import { User } from '../../models/user';
+import { SharingDataService } from '../../services/sharing-data.service';
 
 @Component({
   selector: 'app-user-form',
@@ -11,15 +12,13 @@ import { User } from '../../models/user';
 export class UserFormComponent {
   user: User = new User();
 
-  newUserEventEmitter: EventEmitter<User> = new EventEmitter();
-
-  constructor(){
+  constructor(private sharing_data_service: SharingDataService){
     this.user = new User();
   }
 
   onSubmit(userForm: NgForm){
     if (userForm.valid){
-      this.newUserEventEmitter.emit(this.user);
+      this.sharing_data_service.newUserEventEmitter.emit(this.user);
     }
     userForm.reset();
     userForm.resetForm();
