@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import Swal from 'sweetalert2';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { SharingDataService } from '../../services/sharing-data.service';
 
@@ -14,9 +14,9 @@ import { SharingDataService } from '../../services/sharing-data.service';
 })
 export class UserAppComponent implements OnInit{
   users: User[] = [];
-  selectedUser: User = new User();
 
   constructor(
+    private router: Router,
     private sharing_data_service: SharingDataService,
     private user_service: UserService){
 
@@ -28,7 +28,6 @@ export class UserAppComponent implements OnInit{
     );
     this.addUser();
     this.removeUser();
-    this.setUser();
   }
 
   addUser(){
@@ -44,7 +43,7 @@ export class UserAppComponent implements OnInit{
       }else{
         this.users = [...this.users,{...user, id: new Date().getTime()}];
       }
-      this.selectedUser = new User();
+      this.router.navigate(['/users'],{state: {users: this.users}});
       Swal.fire({
         title: "Guardado!",
         icon: "success",
@@ -69,6 +68,9 @@ export class UserAppComponent implements OnInit{
           this.users = this.users.filter(user => 
             user.id !== id
           )
+          this.router.navigate(['/create-user'], {skipLocationChange:true}).then(() => {
+            this.router.navigate(['/users'],{state: {users: this.users}});
+          })
           Swal.fire({
             title: "Eliminado!",
             text: "El usuario ha sido eliminado.",
@@ -79,9 +81,4 @@ export class UserAppComponent implements OnInit{
     })
   }
 
-  setUser(){
-    this.sharing_data_service.selectedUserEventEmitter.subscribe(user => {
-      this.selectedUser = {...user};
-    })
-  }
 }
