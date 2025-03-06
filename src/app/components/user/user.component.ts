@@ -31,6 +31,6 @@ export class UserComponent implements OnInit{
   }
 
   onEditUser(user: User){
-    this.router.navigate(['/edit-user/', user.id],{state: {user}});
+    this.router.navigate(['/edit-user/', user.id]);
   }
 }
