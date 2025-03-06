@@ -33,9 +33,10 @@ export class UserAppComponent implements OnInit{
 
   findUserById(){
     this.sharing_data_service.findUserByIdEventEmitter.subscribe(id => {
-      const userById = this.users.find(user => {
-        user.id === id;
-      })
+      const userById = this.users.find(user => 
+        user.id === id
+      )
+      this.sharing_data_service.selectUserByIdEventEmitter.emit(userById);
     })
   }
 

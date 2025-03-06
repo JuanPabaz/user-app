@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms' 
 import { User } from '../../models/user';
 import { SharingDataService } from '../../services/sharing-data.service';
@@ -20,7 +20,12 @@ export class UserFormComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.sharing_data_service.selectUserByIdEventEmitter.subscribe(user => {
+      this.user = user;
+    })
+
     this.route.paramMap.subscribe(params => {
+      debugger
       const id: number = +(params.get('id') || '0');
 
       if (id > 0){
