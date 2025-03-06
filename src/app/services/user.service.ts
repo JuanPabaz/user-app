@@ -7,11 +7,17 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class UserService {
+  private baseUrl = 'http://localhost:8080/user';
 
   constructor(private http: HttpClient) { }
 
   findAllUsers(): Observable<User[]>{
     // return of(this.users);
-    return this.http.get<User[]>('http://localhost:8080/user');
+    return this.http.get<User[]>(this.baseUrl);
+  }
+
+  findUserById(id: number): Observable<User>{
+    // return of(this.users);
+    return this.http.get<User>(`${this.baseUrl}/${id}`);
   }
 }
