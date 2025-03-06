@@ -43,17 +43,27 @@ export class UserAppComponent implements OnInit{
   addUser(){
     this.sharing_data_service.newUserEventEmitter.subscribe(user => {
       if (user.id > 0){
-        this.users = this.users.map(u =>{
-          if (u.id === user.id){
-            return {...user};
-          }
-          return u;
-        }
-        )
+        this.user_service.updateUser(user).subscribe(updatedUser => {
+          this.users = this.users.map(u =>{
+            if (u.id === updatedUser.id){
+              return {...updatedUser};
+            }
+            return u;
+          });
+        });
       }else{
-        this.users = [...this.users,{...user, id: new Date().getTime()}];
+        const userRequest = {
+          name: user.name,
+          lastName: user.lastName,
+          email: user.email,
+          username:user.username,
+          password: user.password
+        }
+        this.user_service.createUser(userRequest).subscribe(newUser => {
+          this.users = [...this.users,{...newUser}];
+        })
       }
-      this.router.navigate(['/users'],{state: {users: this.users}});
+      this.router.navigate(['/users']);
       Swal.fire({
         title: "Guardado!",
         icon: "success",
