@@ -85,12 +85,11 @@ export class UserAppComponent implements OnInit{
         confirmButtonText: "Si, eliminar!"
       }).then((result) => {
         if (result.isConfirmed) {
-          this.users = this.users.filter(user => 
-            user.id !== id
-          )
-          this.router.navigate(['/create-user'], {skipLocationChange:true}).then(() => {
-            this.router.navigate(['/users'],{state: {users: this.users}});
-          })
+          this.user_service.deleteUser(id).subscribe(() => {
+            this.router.navigate(['/create-user'], {skipLocationChange:true}).then(() => {
+              this.router.navigate(['/users'],{state: {users: this.users}});
+            })
+          });
           Swal.fire({
             title: "Eliminado!",
             text: "El usuario ha sido eliminado.",
