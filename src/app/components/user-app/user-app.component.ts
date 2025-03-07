@@ -56,7 +56,7 @@ export class UserAppComponent implements OnInit{
               this.router.navigate(['/users'], {state: {users: this.users}});
             },
             error: (err) => {
-              console.log(err.error);
+              this.sharing_data_service.errorsUserFormEventEmitter.emit(err.error);
             }
           }
         );
@@ -80,7 +80,7 @@ export class UserAppComponent implements OnInit{
               });
             },
             error: (err) => {
-              console.log(err.error);
+              this.sharing_data_service.errorsUserFormEventEmitter.emit(err.error);
             } 
           }
         )
