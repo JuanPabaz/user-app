@@ -50,6 +50,7 @@ export class UserAppComponent implements OnInit{
             }
             return u;
           });
+          this.router.navigate(['/users'], {state: {users: this.users}});
         });
       }else{
         const userRequest = {
@@ -61,9 +62,9 @@ export class UserAppComponent implements OnInit{
         }
         this.user_service.createUser(userRequest).subscribe(newUser => {
           this.users = [...this.users,{...newUser}];
+          this.router.navigate(['/users'], {state: {users: this.users}});
         })
       }
-      this.router.navigate(['/users']);
       Swal.fire({
         title: "Guardado!",
         icon: "success",
@@ -86,6 +87,7 @@ export class UserAppComponent implements OnInit{
       }).then((result) => {
         if (result.isConfirmed) {
           this.user_service.deleteUser(id).subscribe(() => {
+            this.users = this.users.filter(user => user.id != id);
             this.router.navigate(['/create-user'], {skipLocationChange:true}).then(() => {
               this.router.navigate(['/users'],{state: {users: this.users}});
             })
