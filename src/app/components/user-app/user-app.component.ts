@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { SharingDataService } from '../../services/sharing-data.service';
+import { error } from 'console';
 
 @Component({
   selector: 'app-user-app',
@@ -43,15 +44,22 @@ export class UserAppComponent implements OnInit{
   addUser(){
     this.sharing_data_service.newUserEventEmitter.subscribe(user => {
       if (user.id > 0){
-        this.user_service.updateUser(user).subscribe(updatedUser => {
-          this.users = this.users.map(u =>{
-            if (u.id === updatedUser.id){
-              return {...updatedUser};
+        this.user_service.updateUser(user).subscribe(
+          {
+            next: (updatedUser) => {
+              this.users = this.users.map(u =>{
+              if (u.id === updatedUser.id){
+                return {...updatedUser};
+              }
+              return u;
+              });
+              this.router.navigate(['/users'], {state: {users: this.users}});
+            },
+            error: (err) => {
+              console.log(err.error);
             }
-            return u;
-          });
-          this.router.navigate(['/users'], {state: {users: this.users}});
-        });
+          }
+        );
       }else{
         const userRequest = {
           name: user.name,
@@ -60,16 +68,23 @@ export class UserAppComponent implements OnInit{
           username:user.username,
           password: user.password
         }
-        this.user_service.createUser(userRequest).subscribe(newUser => {
-          this.users = [...this.users,{...newUser}];
-          this.router.navigate(['/users'], {state: {users: this.users}});
-        })
+        this.user_service.createUser(userRequest).subscribe(
+          {
+            next: (newUser) => {
+              this.users = [...this.users,{...newUser}];
+              this.router.navigate(['/users'], {state: {users: this.users}});
+              Swal.fire({
+                title: "Guardado!",
+                icon: "success",
+                draggable: true
+              });
+            },
+            error: (err) => {
+              console.log(err.error);
+            } 
+          }
+        )
       }
-      Swal.fire({
-        title: "Guardado!",
-        icon: "success",
-        draggable: true
-      });
     })
   }
 

@@ -13,6 +13,7 @@ import { UserService } from '../../services/user.service';
 })
 export class UserFormComponent implements OnInit{
   user: User;
+  errors: any = {};
 
   constructor(
     private user_service: UserService,
