@@ -18,12 +18,18 @@ export class UserComponent implements OnInit{
     private sharing_data_service: SharingDataService,
     private user_service: UserService,
     private router: Router){
+    if (this.router.getCurrentNavigation()?.extras.state){
+      this.users = this.router.getCurrentNavigation()?.extras.state!['users'];
+    }
   }
 
   ngOnInit(): void {
-    this.user_service.findAllUsers().subscribe(users => {
-      this.users = users;
-    });
+    if (this.users == undefined || this.users == null || this.users.length === 0){
+      console.log("Consulta find all")
+      this.user_service.findAllUsers().subscribe(users => {
+        this.users = users;
+      });
+    }
   }
 
   onRemoveUser(id: number){
