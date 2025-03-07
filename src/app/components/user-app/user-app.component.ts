@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import Swal from 'sweetalert2';
-import { Router, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { SharingDataService } from '../../services/sharing-data.service';
 import { error } from 'console';
@@ -17,6 +17,7 @@ export class UserAppComponent implements OnInit{
   users: User[] = [];
 
   constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private sharing_data_service: SharingDataService,
     private user_service: UserService){
@@ -24,9 +25,13 @@ export class UserAppComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.user_service.findAllUsers().subscribe(users => 
-      this.users = users
-    );
+    this.route.paramMap.subscribe(params => {
+      const page = +(params.get('page') || '0');
+      
+      this.user_service.findAllPageable(page).subscribe(pageable => 
+        this.users = pageable.content as User[]
+      );
+    })
     this.addUser();
     this.removeUser();
     this.findUserById();
@@ -56,7 +61,9 @@ export class UserAppComponent implements OnInit{
               this.router.navigate(['/users'], {state: {users: this.users}});
             },
             error: (err) => {
-              this.sharing_data_service.errorsUserFormEventEmitter.emit(err.error);
+              if (err.status === 400){
+                this.sharing_data_service.errorsUserFormEventEmitter.emit(err.error);
+              }
             }
           }
         );
@@ -80,7 +87,9 @@ export class UserAppComponent implements OnInit{
               });
             },
             error: (err) => {
-              this.sharing_data_service.errorsUserFormEventEmitter.emit(err.error);
+              if (err.status === 400){
+                this.sharing_data_service.errorsUserFormEventEmitter.emit(err.error);
+              }
             } 
           }
         )
