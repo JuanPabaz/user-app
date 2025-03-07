@@ -26,6 +26,9 @@ export class UserFormComponent implements OnInit{
     // this.sharing_data_service.selectUserByIdEventEmitter.subscribe(user => {
     //   this.user = user;
     // })
+    this.sharing_data_service.errorsUserFormEventEmitter.subscribe( error => {
+      this.errors = error;
+    })
 
     this.route.paramMap.subscribe(params => {
       const id: number = +(params.get('id') || '0');
@@ -40,9 +43,7 @@ export class UserFormComponent implements OnInit{
   }
 
   onSubmit(userForm: NgForm){
-    if (userForm.valid){
-      this.sharing_data_service.newUserEventEmitter.emit(this.user);
-    }
+    this.sharing_data_service.newUserEventEmitter.emit(this.user);
     userForm.reset();
     userForm.resetForm();
     console.log(this.user);
