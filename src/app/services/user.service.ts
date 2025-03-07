@@ -33,4 +33,8 @@ export class UserService {
     // return of(this.users);
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
+
+  findAllPageable(page: number): Observable<any>{
+    return this.http.get<any>(`${this.baseUrl}/page?page=${page}`);
+  }
 }
