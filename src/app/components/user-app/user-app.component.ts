@@ -41,7 +41,7 @@ export class UserAppComponent implements OnInit{
 
   paganitorEvent(){
     this.sharing_data_service.paginatorEventEmitter.subscribe(paginator => {
-      this.paginator = paginator;
+      this.paginator = paginator.paginator;
     })
   }
 
