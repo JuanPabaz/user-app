@@ -13,6 +13,7 @@ import { SharingDataService } from '../../services/sharing-data.service';
 export class UserComponent implements OnInit{
 
   users: User[] = [];
+  paginator: any = {};
 
   constructor(
     private route: ActivatedRoute,
@@ -33,9 +34,11 @@ export class UserComponent implements OnInit{
       this.route.paramMap.subscribe(params => {
         const page = +(params.get('page') || '0');
         
-        this.user_service.findAllPageable(page).subscribe(pageable => 
-          this.users = pageable.content as User[]
-        );
+        this.user_service.findAllPageable(page).subscribe(pageable => {
+          this.users = pageable.content as User[];
+          this.paginator = pageable.pageable;
+          this.sharing_data_service.paginatorEventEmitter.emit({paginator: this.paginator});
+        });
       })
     }
   }

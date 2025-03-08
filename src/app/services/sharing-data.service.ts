@@ -16,6 +16,8 @@ export class SharingDataService {
   
   private _errorsUserFormEventEmitter = new EventEmitter();
 
+  private _paginatorEventEmitter = new EventEmitter();
+
   constructor() { }
 
   get idUserEventEmitter(): EventEmitter<number>{
@@ -36,5 +38,9 @@ export class SharingDataService {
 
   get errorsUserFormEventEmitter(): EventEmitter<User>{
     return this._errorsUserFormEventEmitter;
+  }
+
+  get paginatorEventEmitter(): EventEmitter<any>{
+    return this._paginatorEventEmitter;
   }
 }

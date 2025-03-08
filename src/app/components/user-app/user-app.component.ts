@@ -15,6 +15,7 @@ import { error } from 'console';
 })
 export class UserAppComponent implements OnInit{
   users: User[] = [];
+  paginator: any = {};
 
   constructor(
     private route: ActivatedRoute,
@@ -35,6 +36,13 @@ export class UserAppComponent implements OnInit{
     this.addUser();
     this.removeUser();
     this.findUserById();
+    this.paganitorEvent();
+  }
+
+  paganitorEvent(){
+    this.sharing_data_service.paginatorEventEmitter.subscribe(paginator => {
+      this.paginator = paginator;
+    })
   }
 
   findUserById(){
