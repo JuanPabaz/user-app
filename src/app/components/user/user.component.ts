@@ -3,10 +3,11 @@ import { User } from '../../models/user';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { SharingDataService } from '../../services/sharing-data.service';
+import { PaginatorComponent } from '../paginator/paginator.component';
 
 @Component({
   selector: 'app-user',
-  imports: [RouterModule],
+  imports: [RouterModule, PaginatorComponent],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
@@ -14,6 +15,7 @@ export class UserComponent implements OnInit{
 
   users: User[] = [];
   paginator: any = {};
+  url: string = '/users/page'
 
   constructor(
     private route: ActivatedRoute,
@@ -22,6 +24,7 @@ export class UserComponent implements OnInit{
     private router: Router){
     if (this.router.getCurrentNavigation()?.extras.state){
       this.users = this.router.getCurrentNavigation()?.extras.state!['users'];
+      this.paginator = this.router.getCurrentNavigation()?.extras.state!['paginator'];
     }
   }
 
@@ -36,7 +39,7 @@ export class UserComponent implements OnInit{
         
         this.user_service.findAllPageable(page).subscribe(pageable => {
           this.users = pageable.content as User[];
-          this.paginator = pageable.pageable;
+          this.paginator = pageable;
           this.sharing_data_service.paginatorEventEmitter.emit({paginator: this.paginator});
         });
       })

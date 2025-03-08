@@ -38,6 +38,9 @@
             }
         </tbody>
     </table>
+    <app-paginator 
+    [paginator]="paginator"
+    [url]="url"/>
 }@else {
     <div class="alert alert-warning">No hay usuarios</div>
 }
