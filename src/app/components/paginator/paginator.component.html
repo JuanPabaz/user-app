@@ -1,1 +1,20 @@
-<p>paginator works!</p>
+@if (paginator.totalPages > 1) {
+    <ul class="pagination">
+        @if (!paginator.first) {
+            <li class="page-item">
+                <a class="page-link" [routerLink]="['/users/page',0]">Primero</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" [routerLink]="['/users/page',paginator.number - 1]">Anterior</a>
+            </li>
+        }
+        @if (!paginator.last) {
+            <li class="page-item">
+                <a class="page-link" [routerLink]="['/users/page',paginator.totalPages - 1]">Ultimo</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" [routerLink]="['/users/page',paginator.number + 1]">Siguiente</a>
+            </li>
+        }
+    </ul>
+}
