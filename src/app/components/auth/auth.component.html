@@ -1,1 +1,18 @@
-<p>auth works!</p>
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title">Login page</h5>
+        <div class="card-body">
+            <form (ngSubmit)="onSubmit()">
+                <input class="form-control" 
+                name="username" 
+                placeholder="johndoe123" 
+                [(ngModel)]="user.username">
+                <input class="form-control" 
+                name="password" 
+                type="password" 
+                [(ngModel)]="user.password">
+                <button class="btn btn-primary" type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
