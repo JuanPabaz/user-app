@@ -10,7 +10,7 @@ export class AuthService {
   private _token: string | undefined;
   private _user: any = {
     isAuth: false,
-    isAdim: false,
+    isAdmin: false,
     user: undefined
   };
 
@@ -58,6 +58,14 @@ export class AuthService {
       return payload;
     }
     return null;
+  }
+
+  isAdmin(){
+    return this.user.isAdmin;
+  }
+
+  isAuth(){
+    return this.user.isAuth;
   }
 
 }
