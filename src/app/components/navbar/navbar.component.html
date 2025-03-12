@@ -12,9 +12,15 @@
             [state]="{users, paginator}">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/create-user']">Crear</a>
+            <a class="nav-link" [routerLink]="['/create-user']">Create</a>
           </li>
         </ul>
+      </div>
+      <div div class="collapse navbar-collapse justify-content-end" id="navbarAuth">
+        <span class="nav-item text-primary mx-3">
+          <a [routerLink]="['/login']" 
+          class="nav-link btn btn-outline-primary">Login</a>
+        </span>
       </div>
     </div>
   </nav>
