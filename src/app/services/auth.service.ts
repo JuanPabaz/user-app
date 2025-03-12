@@ -7,6 +7,13 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
   private baseUrl = 'http://localhost:8080/login';
+  private _token: string | undefined;
+  private _user: any = {
+    isAuth: false,
+    isAdim: false,
+    user: undefined
+  };
+
 
   constructor(private http: HttpClient) { }
 
@@ -14,5 +21,22 @@ export class AuthService {
     return this.http.post<any>(this.baseUrl, {username, password});
   }
 
+  set user(user: any){
+    this._user = user;
+    sessionStorage.setItem('user', JSON.stringify(user));
+  }
+
+  get user(){
+    return this._user;
+  }
+
+  set token(token: string){
+    this._token = token;
+    sessionStorage.setItem('token', token);
+  }
+
+  get token(){
+    return this._token!;
+  }
 
 }
