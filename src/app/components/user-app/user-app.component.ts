@@ -49,7 +49,7 @@ export class UserAppComponent implements OnInit{
           const token = data.token;
           const payload = this.auth_service.getPayload(token);
 
-          const user = { username: payload.subject };
+          const user = { username: payload.sub };
           const login = {
             user,
             isAuth: true,
