@@ -11,15 +11,21 @@
             [routerLink]="['/users']"
             [state]="{users, paginator}">Home</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/create-user']">Create</a>
-          </li>
+          @if (user.isAdmin) {
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/create-user']">Create</a>
+            </li>
+          }
         </ul>
       </div>
       <div div class="collapse navbar-collapse justify-content-end" id="navbarAuth">
         <span class="nav-item nav-link text-primary mx-3">
-          <a [routerLink]="['/login']" 
-          class="btn btn-outline-primary">Login</a>
+          @if (user.isAuth) {
+            {{user.user.username}}
+          }@else {
+            <a [routerLink]="['/login']" 
+            class="btn btn-outline-primary">Login</a>
+          }
         </span>
       </div>
     </div>
