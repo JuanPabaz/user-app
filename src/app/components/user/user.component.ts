@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { SharingDataService } from '../../services/sharing-data.service';
 import { PaginatorComponent } from '../paginator/paginator.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-user',
@@ -21,6 +22,7 @@ export class UserComponent implements OnInit{
     private route: ActivatedRoute,
     private sharing_data_service: SharingDataService,
     private user_service: UserService,
+    private auth_service: AuthService,
     private router: Router){
     if (this.router.getCurrentNavigation()?.extras.state){
       this.users = this.router.getCurrentNavigation()?.extras.state!['users'];
@@ -31,9 +33,6 @@ export class UserComponent implements OnInit{
   ngOnInit(): void {
     if (this.users == undefined || this.users == null || this.users.length === 0){
       console.log("Consulta find all")
-      // this.user_service.findAllUsers().subscribe(users => {
-      //   this.users = users;
-      // });
       this.route.paramMap.subscribe(params => {
         const page = +(params.get('page') || '0');
         
@@ -52,5 +51,9 @@ export class UserComponent implements OnInit{
 
   onEditUser(user: User){
     this.router.navigate(['/edit-user/', user.id]);
+  }
+
+  getAdmin(){
+    return this.auth_service.isAdmin();
   }
 }
