@@ -27,6 +27,12 @@ export class AuthService {
   }
 
   get user(){
+    if (this._user.isAuth){
+      return this._user;
+    }else if (sessionStorage.getItem('user') != null){
+      this._user = JSON.parse(sessionStorage.getItem('user') || '{}');
+      return this._user;
+    }
     return this._user;
   }
 
@@ -36,7 +42,22 @@ export class AuthService {
   }
 
   get token(){
+    if (this._token){
+      return this._token;
+    }else if (sessionStorage.getItem('token') != null){
+      this._token = sessionStorage.getItem('token') || '';
+      return this._token;
+    }
     return this._token!;
+  }
+
+  getPayload(token:string){
+    if (token != null){
+      const payload = JSON.parse(atob(token.split(".")[1]))
+      payload.authorities = JSON.parse(payload.authorities);
+      return payload;
+    }
+    return null;
   }
 
 }
